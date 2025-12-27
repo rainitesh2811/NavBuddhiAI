@@ -1,5 +1,5 @@
 import { useState } from "react";
-import agentIcon from "../../Assets/Images/AIagent.jpg";
+import agentIcon from "../../assets/Images/AIagent.jpg";
 
 
 const AIAgent = () => {

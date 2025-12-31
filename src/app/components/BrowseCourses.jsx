@@ -1,5 +1,5 @@
 import { BookOpen, Clock, Users, Star } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "../components/figma/Imagewithfallback";
 
 const courses = [
   {

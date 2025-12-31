@@ -1,5 +1,5 @@
 import { Search, ArrowRight } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from '../components/figma/Imagewithfallback';
 
 export function Hero() {
   return (

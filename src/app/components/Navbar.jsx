@@ -8,7 +8,7 @@ export function Navbar({ onLoginClick, onSignupClick }) {
 
           <div className="flex items-center gap-2">
             <GraduationCap className="w-8 h-8 text-primary" />
-            <span className="text-xl text-primary">EduLearn</span>
+            <span className="text-xl text-primary">DigitalSkillSathi</span>
           </div>
           <div className="flex items-center gap-3">
             <button

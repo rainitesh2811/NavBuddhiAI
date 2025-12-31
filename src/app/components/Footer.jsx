@@ -8,7 +8,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <GraduationCap className="w-8 h-8 text-primary" />
-              <span className="text-xl">EduLearn</span>
+              <span className="text-xl">DigitalSkillSathi</span>
             </div>
             <p className="text-white/70 leading-relaxed">
               Empowering learners worldwide with quality education and expert-led courses to achieve their dreams.
@@ -86,7 +86,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="text-white/70">info@edulearn.com</span>
+                <span className="text-white/70">info@digitalskillsathi.com</span>
               </li>
             </ul>
           </div>

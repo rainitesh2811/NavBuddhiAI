@@ -18,6 +18,7 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
 
   if (!isOpen) return null;
 
+  // ✅ THIS WAS MISSING EARLIER
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -43,9 +44,10 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
         formData.password
       );
 
-      onClose();
+      window.location.href = "/";
     } catch (err) {
-      setError("Unexpected error occurred");
+      console.error(err);
+      setError(err.message || "Unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -57,9 +59,10 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
 
     try {
       await loginWithGoogle();
-      onClose();
+      // Supabase will redirect
     } catch (err) {
-      setError("Unexpected error occurred");
+      console.error(err);
+      setError(err.message || "Unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -170,7 +173,9 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
 
                 <button
                   type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  onClick={() =>
+                    setShowConfirmPassword(!showConfirmPassword)
+                  }
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
                 >
                   {showConfirmPassword ? <EyeOff /> : <Eye />}
@@ -197,30 +202,26 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
               </span>
             </div>
           </div>
-
-          {/* Only Google signup */}
-          <div>
-            <button
-              onClick={handleGoogleSignup}
-              disabled={loading}
-              className="w-full py-3 px-4 border rounded-lg hover:bg-gray-100 flex items-center justify-center gap-2"
-            >
-              <svg width="20" height="20" viewBox="0 0 48 48">
-                <path fill="#EA4335" d="M24 9.5c3.54 0 6 1.54 7.38 2.84l5.04-4.91C33.89 4.36 29.47 2 24 2 14.82 2 7.09 7.83 4.24 16.08l6.91 5.36C12.65 14.04 17.88 9.5 24 9.5z"/>
-                <path fill="#34A853" d="M46.14 24.49c0-1.57-.14-3.08-.41-4.53H24v8.58h12.39c-.53 2.79-2.16 5.15-4.61 6.73l7.1 5.51C43.3 36.39 46.14 30.9 46.14 24.49z"/>
-                <path fill="#4A90E2" d="M10.77 28.44c-.48-1.43-.75-2.95-.75-4.49s.27-3.06.75-4.49L3.86 13.9C2.65 16.78 2 20.04 2 23.5s.65 6.72 1.86 9.6l6.91-5.36z"/>
-                <path fill="#FBBC05" d="M24 46c6.48 0 11.92-2.13 15.89-5.78l-7.1-5.51c-2.02 1.36-4.61 2.18-7.59 2.18-6.11 0-11.34-4.54-12.85-10.94l-6.91 5.36C7.09 40.17 14.82 46 24 46z"/>
-              </svg>
-              Continue with Google
-            </button>
-          </div>
+<div>
+  <button
+    type="button"
+    onClick={handleGoogleSignup}
+    disabled={loading}
+    className="w-full py-3 px-4 border rounded-lg hover:bg-gray-100 flex items-center justify-center gap-2"
+  >
+    <svg width="20" height="20" viewBox="0 0 48 48">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6 1.54 7.38 2.84l5.04-4.91C33.89 4.36 29.47 2 24 2 14.82 2 7.09 7.83 4.24 16.08l6.91 5.36C12.65 14.04 17.88 9.5 24 9.5z"/>
+      <path fill="#34A853" d="M46.14 24.49c0-1.57-.14-3.08-.41-4.53H24v8.58h12.39c-.53 2.79-2.16 5.15-4.61 6.73l7.1 5.51C43.3 36.39 46.14 30.9 46.14 24.49z"/>
+      <path fill="#4A90E2" d="M10.77 28.44c-.48-1.43-.75-2.95-.75-4.49s.27-3.06.75-4.49L3.86 13.9C2.65 16.78 2 20.04 2 23.5s.65 6.72 1.86 9.6l6.91-5.36z"/>
+      <path fill="#FBBC05" d="M24 46c6.48 0 11.92-2.13 15.89-5.78l-7.1-5.51c-2.02 1.36-4.61 2.18-7.59 2.18-6.11 0-11.34-4.54-12.85-10.94l-6.91 5.36C7.09 40.17 14.82 46 24 46z"/>
+    </svg>
+    Continue with Google
+  </button>
+</div>
 
           <p className="text-center mt-6 text-sm">
             Already have an account?{" "}
-            <button
-              onClick={onSwitchToLogin}
-              className="text-blue-600"
-            >
+            <button onClick={onSwitchToLogin} className="text-blue-600">
               Login
             </button>
           </p>

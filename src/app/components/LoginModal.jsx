@@ -18,9 +18,10 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
 
     try {
       await loginWithEmail(email, password);
-      onClose();
+      window.location.href = "/";
     } catch (err) {
-      setError("Unexpected error occurred");
+      console.error(err);
+      setError(err.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -32,13 +33,15 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
 
     try {
       await loginWithGoogle();
-      onClose();
+      // Supabase redirects automatically
     } catch (err) {
-      setError("Unexpected error occurred");
+      console.error(err);
+      setError(err.message || "Google login failed");
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -46,7 +49,7 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
 
         <button
           onClick={() => {
-            setError("");   // clear error on close
+            setError("");
             onClose();
           }}
           className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition"
@@ -130,12 +133,12 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
             </div>
           </div>
 
-          {/* Only Google button now */}
-          <div className="grid grid-cols-1">
+          <div>
             <button
               type="button"
               onClick={handleGoogle}
-              className="py-3 px-4 border rounded-lg hover:bg-gray-100 flex items-center justify-center gap-2"
+              disabled={loading}
+              className="w-full py-3 px-4 border rounded-lg hover:bg-gray-100 flex items-center justify-center gap-2"
             >
               <svg width="20" height="20" viewBox="0 0 48 48">
                 <path fill="#EA4335" d="M24 9.5c3.54 0 6 1.54 7.38 2.84l5.04-4.91C33.89 4.36 29.47 2 24 2 14.82 2 7.09 7.83 4.24 16.08l6.91 5.36C12.65 14.04 17.88 9.5 24 9.5z"/>

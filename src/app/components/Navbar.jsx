@@ -1,6 +1,36 @@
+import { useEffect, useState } from "react";
 import { GraduationCap } from "lucide-react";
+import { supabase } from "../../supabaseclient";
+import { logoutUser } from "../../auth";
 
 export function Navbar({ onLoginClick, onSignupClick }) {
+  const [user, setUser] = useState(null);
+
+  // get user on mount
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+    };
+
+    getUser();
+
+    // subscribe to future auth changes
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(session?.user || null);
+      }
+    );
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await logoutUser();
+    setUser(null);
+    window.location.href = "/";
+  };
+
   return (
     <nav className="bg-white border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -9,29 +39,48 @@ export function Navbar({ onLoginClick, onSignupClick }) {
           {/* Logo + Name */}
           <div className="flex items-center gap-2 whitespace-nowrap">
             <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
-
             <span className="text-base sm:text-xl font-semibold">
               <span className="text-blue-600">DigitalSkillSathi</span>
             </span>
           </div>
 
-          {/* Auth buttons */}
-          <div className="flex items-center gap-2 sm:gap-3 whitespace-nowrap">
-            <button
-              onClick={onLoginClick}
-              className="px-2.5 py-1.5 sm:px-4 sm:py-2 text-primary hover:text-primary/80 transition-colors"
-            >
-              Login
-            </button>
+          {/* 🔥 Conditional buttons */}
+          <div className="flex items-center gap-3 whitespace-nowrap">
 
-            <button
-              onClick={onSignupClick}
-              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              Sign Up
-            </button>
+            {!user && (
+              <>
+                <button
+                  onClick={onLoginClick}
+                  className="px-3 py-2 text-primary hover:text-primary/80"
+                >
+                  Login
+                </button>
+
+                <button
+                  onClick={onSignupClick}
+                  className="px-3 py-2 bg-primary text-white rounded-lg hover:bg-primary/90"
+                >
+                  Sign Up
+                </button>
+              </>
+            )}
+
+            {user && (
+              <>
+                <span className="text-sm text-gray-600 hidden sm:block">
+                  {user.email}
+                </span>
+
+                <button
+                  onClick={handleLogout}
+                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+
           </div>
-
         </div>
       </div>
     </nav>

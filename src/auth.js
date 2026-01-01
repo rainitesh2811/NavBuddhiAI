@@ -1,75 +1,66 @@
-import {
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-
-import { auth, googleProvider, db } from "./firebase";
-import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
+import { supabase } from "./supabaseclient";
 import { v4 as uuidv4 } from "uuid";
 
+// LOGIN WITH EMAIL
 export const loginWithEmail = async (email, password) => {
-  const res = await signInWithEmailAndPassword(auth, email, password);
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) throw error;
 
   const sessionId = uuidv4();
 
-  await updateDoc(doc(db, "users", res.user.uid), {
-    activeSession: sessionId,
-  });
+  await supabase
+    .from("users")
+    .update({ activeSession: sessionId })
+    .eq("id", data.user.id);
 
   localStorage.setItem("sessionId", sessionId);
 
-  return res.user;
+  return data.user;
 };
-export const loginWithGoogle = async () => {
-  const res = await signInWithPopup(auth, googleProvider);
 
-  const userRef = doc(db, "users", res.user.uid);
-  const snap = await getDoc(userRef);
-
-  if (!snap.exists()) {
-    await setDoc(userRef, {
-      uid: res.user.uid,
-      email: res.user.email,
-      name: res.user.displayName || "",
-      coursesOwned: [],
-      activeSession: null,
-      createdAt: new Date(),
-    });
-  }
-
-  return res.user;
-};
+// SIGNUP WITH EMAIL
 export const createUserWithEmail = async (fullName, email, password) => {
-  const res = await createUserWithEmailAndPassword(auth, email, password);
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) throw error;
 
   const sessionId = uuidv4();
 
-  await setDoc(doc(db, "users", res.user.uid), {
-    uid: res.user.uid,
-    email: email,
+  await supabase.from("users").insert({
+    id: data.user.id,
     name: fullName,
+    email,
     coursesOwned: [],
     activeSession: sessionId,
-    createdAt: new Date(),
+    created_at: new Date(),
   });
 
   localStorage.setItem("sessionId", sessionId);
 
-  return res.user;
+  return data.user;
 };
+
+// GOOGLE LOGIN
+export const loginWithGoogle = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: window.location.origin },
+  });
+
+  if (error) throw error;
+
+  return data;
+};
+
+
 export const logoutUser = async () => {
-  const uid = auth.currentUser?.uid;
-  const sessionId = localStorage.getItem("sessionId");
-
-  if (uid && sessionId) {
-    await updateDoc(doc(db, "users", uid), {
-      activeSession: null,
-    });
-  }
-
+  await supabase.auth.signOut();
   localStorage.removeItem("sessionId");
-
-  await signOut(auth);
 };

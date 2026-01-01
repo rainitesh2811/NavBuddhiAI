@@ -1,3 +1,8 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* Prevent horizontal scrolling globally */
+html, body {
+  overflow-x: hidden;
+}

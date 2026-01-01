@@ -6,21 +6,27 @@ export function Navbar({ onLoginClick, onSignupClick }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
 
-          <div className="flex items-center gap-2">
-            <GraduationCap className="w-8 h-8 text-primary" />
-            <span className="text-xl text-primary">DigitalSkillSathi</span>
+          {/* Logo + Name */}
+          <div className="flex items-center gap-2 whitespace-nowrap">
+            <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
+
+            <span className="text-base sm:text-xl font-semibold">
+              <span className="text-blue-600">DigitalSkillSathi</span>
+            </span>
           </div>
-          <div className="flex items-center gap-3">
+
+          {/* Auth buttons */}
+          <div className="flex items-center gap-2 sm:gap-3 whitespace-nowrap">
             <button
               onClick={onLoginClick}
-              className="px-4 py-2 text-primary hover:text-primary/80 transition-colors"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 text-primary hover:text-primary/80 transition-colors"
             >
               Login
             </button>
 
             <button
               onClick={onSignupClick}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
             >
               Sign Up
             </button>

@@ -35,8 +35,8 @@ export function Navbar({ onLoginClick, onSignupClick }) {
 
           {/* Logo only */}
           <div className="flex items-center gap-2 whitespace-nowrap">
-            <img
-  src="./assets/logo.png"
+  <img
+  src="/logo.png"
   alt="Logo"
   className="h-10 w-auto sm:h-12 object-contain"
 />

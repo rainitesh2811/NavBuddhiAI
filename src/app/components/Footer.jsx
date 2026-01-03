@@ -73,7 +73,7 @@ export function Footer() {
         <hr />
         <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 gap-3">
 
-          <p>© 2025 Digital Skill Sathi. All rights reserved.</p>
+          <p>© 2026 Digital Skill Sathi. All rights reserved.</p>
 
           <div className="flex gap-6">
             <a href="#" className="hover:underline">Privacy Policy</a>

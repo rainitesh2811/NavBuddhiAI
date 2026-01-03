@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { GraduationCap } from "lucide-react";
 import { supabase } from "../../supabaseclient";
 import { logoutUser } from "../../auth";
 
 export function Navbar({ onLoginClick, onSignupClick }) {
   const [user, setUser] = useState(null);
 
-  // get user on mount
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -15,7 +13,6 @@ export function Navbar({ onLoginClick, onSignupClick }) {
 
     getUser();
 
-    // subscribe to future auth changes
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUser(session?.user || null);
@@ -36,17 +33,18 @@ export function Navbar({ onLoginClick, onSignupClick }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
 
-          {/* Logo + Name */}
+          {/* Logo only */}
           <div className="flex items-center gap-2 whitespace-nowrap">
-            <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
-            <span className="text-base sm:text-xl font-semibold">
-              <span className="text-blue-600">DigitalSkillSathi</span>
-            </span>
+            <img
+  src="./assets/logo.png"
+  alt="Logo"
+  className="h-10 w-auto sm:h-12 object-contain"
+/>
+
           </div>
 
-          {/* 🔥 Conditional buttons */}
+          {/* Buttons */}
           <div className="flex items-center gap-3 whitespace-nowrap">
-
             {!user && (
               <>
                 <button
@@ -79,8 +77,8 @@ export function Navbar({ onLoginClick, onSignupClick }) {
                 </button>
               </>
             )}
-
           </div>
+
         </div>
       </div>
     </nav>

@@ -129,7 +129,7 @@ export function Navbar({ onLoginClick, onSignupClick }) {
               Profile
             </a>
 
-            <a href="/my-courses" className="block px-4 py-2 hover:bg-gray-100">
+            <a href="/BrowseCourses" className="block px-4 py-2 hover:bg-gray-100">
               My Courses
             </a>
 

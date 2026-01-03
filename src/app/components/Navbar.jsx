@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseclient";
 import { logoutUser } from "../../auth";
+import { Menu, X } from "lucide-react";
 
 export function Navbar({ onLoginClick, onSignupClick }) {
   const [user, setUser] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -33,18 +35,18 @@ export function Navbar({ onLoginClick, onSignupClick }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
 
-          {/* Logo only */}
+          {/* Logo */}
           <div className="flex items-center gap-2 whitespace-nowrap">
-  <img
-  src="/logo.png"
-  alt="Logo"
-  className="h-10 w-auto sm:h-12 object-contain"
-/>
-
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="h-10 w-auto sm:h-12 object-contain"
+            />
           </div>
 
-          {/* Buttons */}
-          <div className="flex items-center gap-3 whitespace-nowrap">
+          {/* ---------- Desktop (≥ md) menu ---------- */}
+          <div className="hidden md:flex items-center gap-4">
+
             {!user && (
               <>
                 <button
@@ -65,9 +67,19 @@ export function Navbar({ onLoginClick, onSignupClick }) {
 
             {user && (
               <>
-                <span className="text-sm text-gray-600 hidden sm:block">
-                  {user.email}
-                </span>
+                <span className="text-sm text-gray-600">{user.email}</span>
+
+                <a href="/profile" className="px-3 py-2 hover:text-primary">
+                  Profile
+                </a>
+
+                <a href="/my-courses" className="px-3 py-2 hover:text-primary">
+                  My Courses
+                </a>
+
+                <a href="/payments" className="px-3 py-2 hover:text-primary">
+                  Payment History
+                </a>
 
                 <button
                   onClick={handleLogout}
@@ -79,7 +91,51 @@ export function Navbar({ onLoginClick, onSignupClick }) {
             )}
           </div>
 
+          {/* ---------- Mobile / Tablet (hamburger) ---------- */}
+          <div className="md:hidden">
+            {user ? (
+              <button onClick={() => setOpen(!open)}>
+                {open ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={onLoginClick}
+                  className="px-3 py-2 text-primary"
+                >
+                  Login
+                </button>
+              </>
+            )}
+          </div>
         </div>
+
+        {/* ---------- Mobile dropdown panel ---------- */}
+        {user && open && (
+          <div className="md:hidden bg-white border-t py-3 space-y-2">
+
+            <div className="px-4 text-sm text-gray-600">{user.email}</div>
+
+            <a href="/profile" className="block px-4 py-2 hover:bg-gray-100">
+              Profile
+            </a>
+
+            <a href="/my-courses" className="block px-4 py-2 hover:bg-gray-100">
+              My Courses
+            </a>
+
+            <a href="/payments" className="block px-4 py-2 hover:bg-gray-100">
+              Payment History
+            </a>
+
+            <button
+              onClick={handleLogout}
+              className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );

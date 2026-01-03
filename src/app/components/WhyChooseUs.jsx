@@ -1,11 +1,12 @@
 import { Award, Users, Video, HeadphonesIcon } from "lucide-react";
 
-export function WhyChooseUs({ onSignupClick, isLoggedIn }) {  
+export function WhyChooseUs({ onSignupClick, isLoggedIn }) {
 
   return (
     <section className="bg-[#0F2C54] text-white py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-6">
 
+        {/* Top title + description */}
         <div className="grid md:grid-cols-2 gap-10 mb-12">
           <div>
             <p className="text-sm uppercase text-gray-300 mb-2">Why</p>
@@ -22,7 +23,9 @@ export function WhyChooseUs({ onSignupClick, isLoggedIn }) {
           </div>
         </div>
 
+        {/* Feature Row */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+
           <div>
             <Award className="w-8 h-8 mb-3" />
             <h3 className="font-semibold text-lg mb-1">You'll find the right guidance</h3>
@@ -59,7 +62,7 @@ export function WhyChooseUs({ onSignupClick, isLoggedIn }) {
         {/* Buttons */}
         <div className="flex gap-4">
 
-          {/* 🔥 only show Start when NOT logged in */}
+          {/* ⭐ Hide Start when logged in */}
           {!isLoggedIn && (
             <button
               onClick={onSignupClick}

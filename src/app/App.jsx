@@ -12,7 +12,7 @@ import "../styles/index.css";
 
 export default function App() {
 
-  // 🔥 Track login state here
+  // ⭐ user login state here
   const [user, setUser] = useState(null);
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -49,10 +49,9 @@ export default function App() {
 
       <ComboPacks />
 
-      {/* ⭐ Login-aware WhyChooseUs */}
       <WhyChooseUs
         onSignupClick={handleOpenSignup}
-        isLoggedIn={!!user}
+        isLoggedIn={!!user}   // 🔥 works now
       />
 
       <Footer />
@@ -61,7 +60,7 @@ export default function App() {
         isOpen={isLoginOpen}
         onClose={handleCloseModals}
 
-        // optional → when login succeeds set user
+        // ⭐ set user on successful login
         onSuccess={(loggedInUser) => {
           setUser(loggedInUser);
           handleCloseModals();
@@ -74,6 +73,7 @@ export default function App() {
         isOpen={isSignupOpen}
         onClose={handleCloseModals}
 
+        // ⭐ set user on successful signup
         onSuccess={(createdUser) => {
           setUser(createdUser);
           handleCloseModals();

@@ -91,23 +91,32 @@ export function Navbar({ onLoginClick, onSignupClick }) {
             )}
           </div>
 
-          {/* ---------- Mobile / Tablet (hamburger) ---------- */}
           <div className="md:hidden">
-            {user ? (
-              <button onClick={() => setOpen(!open)}>
-                {open ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-              </button>
-            ) : (
-              <>
-                <button
-                  onClick={onLoginClick}
-                  className="px-3 py-2 text-primary"
-                >
-                  Login
-                </button>
-              </>
-            )}
-          </div>
+  {user ? (
+    // when logged in → hamburger menu
+    <button onClick={() => setOpen(!open)}>
+      {open ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+    </button>
+  ) : (
+    // when logged OUT → show Login + Sign Up
+    <div className="flex items-center gap-2">
+      <button
+        onClick={onLoginClick}
+        className="px-3 py-2 text-primary"
+      >
+        Login
+      </button>
+
+      <button
+        onClick={onSignupClick}
+        className="px-3 py-2 bg-primary text-white rounded-lg"
+      >
+        Sign Up
+      </button>
+    </div>
+  )}
+</div>
+
         </div>
 
         {/* ---------- Mobile dropdown panel ---------- */}

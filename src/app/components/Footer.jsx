@@ -2,7 +2,6 @@ import {
   Facebook,
   Twitter,
   Instagram,
-  Linkedin,
   Youtube
 } from "lucide-react";
 
@@ -11,11 +10,7 @@ export function Footer() {
     <footer className="bg-white text-gray-800 border-t font-space">
 
       <div className="max-w-6xl mx-auto px-6 py-12 space-y-10">
-
-        {/* ========= TOP SECTION ========= */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-          {/* LEFT: Logo + Newsletter */}
           <div className="max-w-md">
             <img
               src="/logo.png"
@@ -44,40 +39,30 @@ export function Footer() {
             </p>
           </div>
 
-          {/* RIGHT: Columns */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-
-            {/* Learning */}
             <div>
               <h3 className="font-semibold mb-3">Learning</h3>
               <ul className="space-y-2 text-sm">
                 <li><a href="#" className="hover:underline">Explore courses</a></li>
                 <li><a href="#" className="hover:underline">How it works</a></li>
                 <li><a href="#" className="hover:underline">Certifications</a></li>
-                <li><a href="#" className="hover:underline">Earn with us</a></li>
                 <li><a href="#" className="hover:underline">Community</a></li>
               </ul>
             </div>
-
-            {/* Resources */}
             <div>
               <h3 className="font-semibold mb-3">Resources</h3>
               <ul className="space-y-2 text-sm">
                 <li><a href="#" className="hover:underline">Blog</a></li>
                 <li><a href="#" className="hover:underline">FAQ</a></li>
                 <li><a href="#" className="hover:underline">Contact</a></li>
-                <li><a href="#" className="hover:underline">Guides</a></li>
                 <li><a href="#" className="hover:underline">Support</a></li>
               </ul>
             </div>
-
-            {/* Follow Us */}
             <div>
               <h3 className="font-semibold mb-3">Follow us</h3>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center gap-2"><Facebook className="w-4 h-4" /> Facebook</li>
                 <li className="flex items-center gap-2"><Instagram className="w-4 h-4" /> Instagram</li>
-                <li className="flex items-center gap-2"><Twitter className="w-4 h-4" /> X</li>
                 <li className="flex items-center gap-2"><Linkedin className="w-4 h-4" /> LinkedIn</li>
                 <li className="flex items-center gap-2"><Youtube className="w-4 h-4" /> YouTube</li>
               </ul>
@@ -85,11 +70,7 @@ export function Footer() {
 
           </div>
         </div>
-
-        {/* Divider */}
         <hr />
-
-        {/* ========= BOTTOM SECTION ========= */}
         <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 gap-3">
 
           <p>© 2025 Digital Skill Sathi. All rights reserved.</p>

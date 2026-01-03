@@ -1,7 +1,7 @@
 import {
   Facebook,
-  Twitter,
   Instagram,
+  Linkedin,
   Youtube
 } from "lucide-react";
 

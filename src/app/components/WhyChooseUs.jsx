@@ -1,14 +1,12 @@
 import { Award, Users, Video, HeadphonesIcon } from "lucide-react";
 
-export function WhyChooseUs() {
+export function WhyChooseUs({ onSignupClick }) {
   return (
     <section className="bg-[#0F2C54] text-white py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-6">
 
-        {/* Top grid title + description */}
+        {/* Top title + description */}
         <div className="grid md:grid-cols-2 gap-10 mb-12">
-
-          {/* Left heading */}
           <div>
             <p className="text-sm uppercase text-gray-300 mb-2">Why</p>
 
@@ -17,7 +15,6 @@ export function WhyChooseUs() {
             </h2>
           </div>
 
-          {/* Right description */}
           <div className="text-gray-300 text-sm md:text-base">
             This platform exists because we believe in you. You can learn real
             skills, create real projects, and earn real money. Everything here is
@@ -25,10 +22,9 @@ export function WhyChooseUs() {
           </div>
         </div>
 
-        {/* -------- Feature Row -------- */}
+        {/* Feature Row */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
 
-          {/* 1 */}
           <div>
             <Award className="w-8 h-8 mb-3" />
             <h3 className="font-semibold text-lg mb-1">
@@ -39,7 +35,6 @@ export function WhyChooseUs() {
             </p>
           </div>
 
-          {/* 2 */}
           <div>
             <Video className="w-8 h-8 mb-3" />
             <h3 className="font-semibold text-lg mb-1">
@@ -50,7 +45,6 @@ export function WhyChooseUs() {
             </p>
           </div>
 
-          {/* 3 */}
           <div>
             <Users className="w-8 h-8 mb-3" />
             <h3 className="font-semibold text-lg mb-1">
@@ -61,7 +55,6 @@ export function WhyChooseUs() {
             </p>
           </div>
 
-          {/* 4 */}
           <div>
             <HeadphonesIcon className="w-8 h-8 mb-3" />
             <h3 className="font-semibold text-lg mb-1">
@@ -73,9 +66,13 @@ export function WhyChooseUs() {
           </div>
         </div>
 
-        {/* -------- Buttons -------- */}
+        {/* Buttons */}
         <div className="flex gap-4">
-          <button className="px-6 py-2 bg-white text-black rounded-md">
+          {/* 🔥 Opens Signup Modal */}
+          <button
+            onClick={onSignupClick}
+            className="px-6 py-2 bg-white text-black rounded-md"
+          >
             Start
           </button>
 

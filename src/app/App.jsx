@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { BrowseCourses } from "./components/BrowseCourses";
@@ -8,8 +7,8 @@ import { WhyChooseUs } from "./components/WhyChooseUs";
 import { Footer } from "./components/Footer";
 import { LoginModal } from "./components/LoginModal";
 import { SignupModal } from "./components/SignupModal";
-import  LearningJourney  from "./components/LearningJourney";
-import "../styles/index.css"
+import LearningJourney from "./components/LearningJourney";
+import "../styles/index.css";
 
 export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -32,13 +31,19 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      <Navbar onLoginClick={handleOpenLogin} onSignupClick={handleOpenSignup} />
+      <Navbar
+        onLoginClick={handleOpenLogin}
+        onSignupClick={handleOpenSignup}
+      />
 
       <Hero />
       <BrowseCourses />
-      <LearningJourney/>
+      <LearningJourney />
       <ComboPacks />
-      <WhyChooseUs />
+
+      {/* 🔥 Start button in WhyChooseUs will open signup modal */}
+      <WhyChooseUs onSignupClick={handleOpenSignup} />
+
       <Footer />
 
       <LoginModal

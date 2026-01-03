@@ -30,7 +30,10 @@ const courses = [
 
 export function BrowseCourses() {
   return (
-    <section id="courses" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+    <section
+      id="browse-courses"   // ✅ IMPORTANT — this matches Explore button
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl text-foreground mb-4">

@@ -44,7 +44,7 @@ export function Navbar({ onLoginClick, onSignupClick }) {
             />
           </div>
 
-          {/* ---------- Desktop (≥ md) menu ---------- */}
+          {/* -------- Desktop Menu (md and up) -------- */}
           <div className="hidden md:flex items-center gap-4">
 
             {!user && (
@@ -67,8 +67,6 @@ export function Navbar({ onLoginClick, onSignupClick }) {
 
             {user && (
               <>
-                <span className="text-sm text-gray-600">{user.email}</span>
-
                 <a href="/profile" className="px-3 py-2 hover:text-primary">
                   Profile
                 </a>
@@ -91,45 +89,41 @@ export function Navbar({ onLoginClick, onSignupClick }) {
             )}
           </div>
 
+          {/* -------- Mobile / Tablet Header -------- */}
           <div className="md:hidden">
-  {user ? (
-    // when logged in → hamburger menu
-    <button onClick={() => setOpen(!open)}>
-      {open ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-    </button>
-  ) : (
-    // when logged OUT → show Login + Sign Up
-    <div className="flex items-center gap-2">
-      <button
-        onClick={onLoginClick}
-        className="px-3 py-2 text-primary"
-      >
-        Login
-      </button>
+            {user ? (
+              <button onClick={() => setOpen(!open)}>
+                {open ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+              </button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={onLoginClick}
+                  className="px-3 py-2 text-primary"
+                >
+                  Login
+                </button>
 
-      <button
-        onClick={onSignupClick}
-        className="px-3 py-2 bg-primary text-white rounded-lg"
-      >
-        Sign Up
-      </button>
-    </div>
-  )}
-</div>
-
+                <button
+                  onClick={onSignupClick}
+                  className="px-3 py-2 bg-primary text-white rounded-lg"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* ---------- Mobile dropdown panel ---------- */}
+        {/* -------- Mobile Dropdown -------- */}
         {user && open && (
-          <div className="md:hidden bg-white border-t py-3 space-y-2">
-
-            <div className="px-4 text-sm text-gray-600">{user.email}</div>
+          <div className="md:hidden bg-white border-t py-3 space-y-1">
 
             <a href="/profile" className="block px-4 py-2 hover:bg-gray-100">
               Profile
             </a>
 
-            <a href="/BrowseCourses" className="block px-4 py-2 hover:bg-gray-100">
+            <a href="/my-courses" className="block px-4 py-2 hover:bg-gray-100">
               My Courses
             </a>
 

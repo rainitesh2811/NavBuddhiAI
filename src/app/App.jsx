@@ -11,6 +11,10 @@ import LearningJourney from "./components/LearningJourney";
 import "../styles/index.css";
 
 export default function App() {
+
+  // 🔥 Track login state here
+  const [user, setUser] = useState(null);
+
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
@@ -31,30 +35,50 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
+
       <Navbar
         onLoginClick={handleOpenLogin}
         onSignupClick={handleOpenSignup}
       />
 
       <Hero />
+
       <BrowseCourses />
+
       <LearningJourney />
+
       <ComboPacks />
 
-      {/* 🔥 Start button in WhyChooseUs will open signup modal */}
-      <WhyChooseUs onSignupClick={handleOpenSignup} />
+      {/* ⭐ Login-aware WhyChooseUs */}
+      <WhyChooseUs
+        onSignupClick={handleOpenSignup}
+        isLoggedIn={!!user}
+      />
 
       <Footer />
 
       <LoginModal
         isOpen={isLoginOpen}
         onClose={handleCloseModals}
+
+        // optional → when login succeeds set user
+        onSuccess={(loggedInUser) => {
+          setUser(loggedInUser);
+          handleCloseModals();
+        }}
+
         onSwitchToSignup={handleOpenSignup}
       />
 
       <SignupModal
         isOpen={isSignupOpen}
         onClose={handleCloseModals}
+
+        onSuccess={(createdUser) => {
+          setUser(createdUser);
+          handleCloseModals();
+        }}
+
         onSwitchToLogin={handleOpenLogin}
       />
     </div>

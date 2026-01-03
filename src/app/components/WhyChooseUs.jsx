@@ -1,114 +1,87 @@
-import { Award, Users, Video, HeadphonesIcon, TrendingUp, Shield } from "lucide-react";
-
-const features = [
-  {
-    id: 1,
-    icon: Award,
-    title: "Expert Instructors",
-    description:
-      "Learn from industry professionals with years of real-world experience",
-  },
-  {
-    id: 2,
-    icon: Video,
-    title: "Lifetime Access",
-    description:
-      "Get unlimited access to course materials and updates forever",
-  },
-  {
-    id: 3,
-    icon: Users,
-    title: "Active Community",
-    description:
-      "Join a thriving community of learners and mentors worldwide",
-  },
-  {
-    id: 4,
-    icon: HeadphonesIcon,
-    title: "24/7 Support",
-    description:
-      "Our dedicated support team is always ready to help you succeed",
-  },
-  {
-    id: 5,
-    icon: TrendingUp,
-    title: "Career Growth",
-    description:
-      "Boost your career with industry-recognized certificates and skills",
-  },
-  {
-    id: 6,
-    icon: Shield,
-    title: "Money-Back Guarantee",
-    description:
-      "30-day money-back guarantee if you're not satisfied with your purchase",
-  },
-];
+import { Award, Users, Video, HeadphonesIcon } from "lucide-react";
 
 export function WhyChooseUs() {
   return (
-    <section
-      id="why-us"
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-secondary to-white"
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl text-foreground mb-4">
-            Why Choose EduLearn?
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            We're committed to providing the best online learning experience
-            with features designed for your success
-          </p>
-        </div>
+    <section className="bg-[#0F2C54] text-white py-16 md:py-24">
+      <div className="max-w-6xl mx-auto px-6">
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <div
-                key={feature.id}
-                className="bg-white p-8 rounded-xl border border-border hover:shadow-xl transition-shadow group"
-              >
-                <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-5 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Icon className="w-7 h-7 text-primary group-hover:text-white" />
-                </div>
-                <h3 className="text-xl text-foreground mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-            );
-          })}
-        </div>
+        {/* Top grid title + description */}
+        <div className="grid md:grid-cols-2 gap-10 mb-12">
 
-        <div className="mt-20 bg-primary rounded-2xl p-12 text-center">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-2">
-              <div className="text-4xl md:text-5xl text-primary-foreground">
-                90%
-              </div>
-              <div className="text-primary-foreground/80">Success Rate</div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-4xl md:text-5xl text-primary-foreground">
-                500+
-              </div>
-              <div className="text-primary-foreground/80">Graduates</div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-4xl md:text-5xl text-primary-foreground">
-                10+
-              </div>
-              <div className="text-primary-foreground/80">Courses</div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-4xl md:text-5xl text-primary-foreground">
-                4.5⭐
-              </div>
-              <div className="text-primary-foreground/80">Average Rating</div>
-            </div>
+          {/* Left heading */}
+          <div>
+            <p className="text-sm uppercase text-gray-300 mb-2">Why</p>
+
+            <h2 className="text-3xl md:text-4xl font-bold leading-snug">
+              Learn, build, and earn <br /> with confidence
+            </h2>
           </div>
+
+          {/* Right description */}
+          <div className="text-gray-300 text-sm md:text-base">
+            This platform exists because we believe in you. You can learn real
+            skills, create real projects, and earn real money. Everything here is
+            designed to help you move forward.
+          </div>
+        </div>
+
+        {/* -------- Feature Row -------- */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+
+          {/* 1 */}
+          <div>
+            <Award className="w-8 h-8 mb-3" />
+            <h3 className="font-semibold text-lg mb-1">
+              You'll find the right guidance
+            </h3>
+            <p className="text-gray-300 text-sm">
+              Expert instructors and verified feedback keep you on track and moving forward.
+            </p>
+          </div>
+
+          {/* 2 */}
+          <div>
+            <Video className="w-8 h-8 mb-3" />
+            <h3 className="font-semibold text-lg mb-1">
+              You can learn and grow here
+            </h3>
+            <p className="text-gray-300 text-sm">
+              Structured courses and live projects build real confidence in what you can do.
+            </p>
+          </div>
+
+          {/* 3 */}
+          <div>
+            <Users className="w-8 h-8 mb-3" />
+            <h3 className="font-semibold text-lg mb-1">
+              Skills lead to real income
+            </h3>
+            <p className="text-gray-300 text-sm">
+              Internships, jobs, and affiliate programs turn what you learn into money.
+            </p>
+          </div>
+
+          {/* 4 */}
+          <div>
+            <HeadphonesIcon className="w-8 h-8 mb-3" />
+            <h3 className="font-semibold text-lg mb-1">
+              This platform is made for you
+            </h3>
+            <p className="text-gray-300 text-sm">
+              Whether you're from a small town or a big city — you belong here.
+            </p>
+          </div>
+        </div>
+
+        {/* -------- Buttons -------- */}
+        <div className="flex gap-4">
+          <button className="px-6 py-2 bg-white text-black rounded-md">
+            Start
+          </button>
+
+          <button className="px-6 py-2 underline-offset-4 hover:underline">
+            More →
+          </button>
         </div>
       </div>
     </section>

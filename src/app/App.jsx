@@ -8,6 +8,7 @@ import { WhyChooseUs } from "./components/WhyChooseUs";
 import { Footer } from "./components/Footer";
 import { LoginModal } from "./components/LoginModal";
 import { SignupModal } from "./components/SignupModal";
+import  LearningJourney  from "./components/LearningJourney";
 import "../styles/index.css"
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
 
       <Hero />
       <BrowseCourses />
+      <LearningJourney/>
       <ComboPacks />
       <WhyChooseUs />
       <Footer />

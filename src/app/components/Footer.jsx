@@ -76,9 +76,6 @@ export function Footer() {
                   </button>
                 </li>
 
-                <li><a className="hover:underline">Certifications</a></li>
-                <li><a className="hover:underline">Community</a></li>
-
                 {/* ⭐ EMAIL HERE */}
                 <li className="pt-3 text-gray-700 text-sm">
                   <strong>Email:</strong><br />
@@ -95,8 +92,6 @@ export function Footer() {
               <ul className="space-y-2 text-sm">
                 <li><a className="hover:underline">Blog</a></li>
                 <li><a className="hover:underline">FAQ</a></li>
-                <li><a className="hover:underline">Contact</a></li>
-                <li><a className="hover:underline">Support</a></li>
 
                 {/* ⭐ PHONE HERE */}
                 <li className="pt-3 text-gray-700 text-sm">

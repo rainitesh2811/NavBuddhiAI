@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { BrowseCourses } from "./components/BrowseCourses";
@@ -8,15 +8,31 @@ import { Footer } from "./components/Footer";
 import { LoginModal } from "./components/LoginModal";
 import { SignupModal } from "./components/SignupModal";
 import LearningJourney from "./components/LearningJourney";
+import { supabase } from "../supabaseclient";  // ⭐ make sure path is correct
 import "../styles/index.css";
 
 export default function App() {
 
-  // ⭐ user login state here
   const [user, setUser] = useState(null);
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+
+  // ⭐ get current user on load
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user || null);
+    };
+    getUser();
+
+    // ⭐ listen for login/logout changes
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
 
   const handleOpenLogin = () => {
     setIsSignupOpen(false);
@@ -36,22 +52,17 @@ export default function App() {
   return (
     <div className="min-h-screen">
 
-      <Navbar
-        onLoginClick={handleOpenLogin}
-        onSignupClick={handleOpenSignup}
-      />
+      <Navbar onLoginClick={handleOpenLogin} onSignupClick={handleOpenSignup} />
 
       <Hero />
-
       <BrowseCourses />
-
       <LearningJourney />
-
       <ComboPacks />
 
+      {/* ⭐ Start button now syncs to real auth */}
       <WhyChooseUs
         onSignupClick={handleOpenSignup}
-        isLoggedIn={!!user}   // 🔥 works now
+        isLoggedIn={!!user}
       />
 
       <Footer />
@@ -59,26 +70,12 @@ export default function App() {
       <LoginModal
         isOpen={isLoginOpen}
         onClose={handleCloseModals}
-
-        // ⭐ set user on successful login
-        onSuccess={(loggedInUser) => {
-          setUser(loggedInUser);
-          handleCloseModals();
-        }}
-
         onSwitchToSignup={handleOpenSignup}
       />
 
       <SignupModal
         isOpen={isSignupOpen}
         onClose={handleCloseModals}
-
-        // ⭐ set user on successful signup
-        onSuccess={(createdUser) => {
-          setUser(createdUser);
-          handleCloseModals();
-        }}
-
         onSwitchToLogin={handleOpenLogin}
       />
     </div>

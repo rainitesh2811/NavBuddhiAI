@@ -8,7 +8,9 @@ import { Footer } from "./components/Footer";
 import { LoginModal } from "./components/LoginModal";
 import { SignupModal } from "./components/SignupModal";
 import LearningJourney from "./components/LearningJourney";
-import { supabase } from "../supabaseclient";  // ⭐ make sure path is correct
+import { supabase } from "../supabaseclient";
+import Payment from "./components/Payment";
+
 import "../styles/index.css";
 
 export default function App() {
@@ -18,15 +20,12 @@ export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
-  // ⭐ get current user on load
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
       setUser(data.user || null);
     };
     getUser();
-
-    // ⭐ listen for login/logout changes
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user || null);
     });
@@ -48,6 +47,11 @@ export default function App() {
     setIsLoginOpen(false);
     setIsSignupOpen(false);
   };
+
+  if (window.location.pathname === "/payment") {
+  return <Payment />;
+}
+
 
   return (
     <div className="min-h-screen">

@@ -89,11 +89,15 @@ export function BrowseCourses() {
 
                 <div className="flex items-center justify-between pt-3 border-t border-border">
                   <span className="text-2xl text-primary">{course.price}</span>
+<button
+  onClick={() =>
+    window.location.href = `/payment?title=${encodeURIComponent(course.title)}&price=${course.price}`
+  }
+  className="px-4 py-2 bg-primary text-white rounded-lg"
+>
+  Enroll Now
+</button>
 
-                  <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2">
-                    <BookOpen className="w-4 h-4" />
-                    Enroll Now
-                  </button>
                 </div>
               </div>
             </div>

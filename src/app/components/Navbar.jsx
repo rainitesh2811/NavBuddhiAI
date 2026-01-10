@@ -34,15 +34,17 @@ export function Navbar({ onLoginClick, onSignupClick }) {
     <nav className="bg-white border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
+<div
+  className="flex items-center gap-2 whitespace-nowrap cursor-pointer"
+  onClick={() => (window.location.href = "/")}
+>
+  <img
+    src="/logo.png"
+    alt="Logo"
+    className="h-10 w-auto sm:h-12 object-contain"
+  />
+</div>
 
-          {/* Logo */}
-          <div className="flex items-center gap-2 whitespace-nowrap">
-            <img
-              src="/logo.png"
-              alt="Logo"
-              className="h-10 w-auto sm:h-12 object-contain"
-            />
-          </div>
 
           {/* -------- Desktop Menu (md and up) -------- */}
           <div className="hidden md:flex items-center gap-4">

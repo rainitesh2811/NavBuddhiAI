@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../supabaseclient";
+import { supabase } from "../../supabaseclient";
 
 export default function Payment() {
   const params = new URLSearchParams(window.location.search);

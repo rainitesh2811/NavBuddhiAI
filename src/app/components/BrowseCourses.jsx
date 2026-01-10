@@ -91,9 +91,10 @@ export function BrowseCourses() {
                   <span className="text-2xl text-primary">{course.price}</span>
 <button
   onClick={() =>
-    window.location.href = `/payment?title=${encodeURIComponent(course.title)}&price=${course.price}`
+    window.location.href =
+      `/payment?title=${encodeURIComponent(course.title)}&price=${course.price}&category=${course.category}`
   }
-  className="px-4 py-2 bg-primary text-white rounded-lg"
+  className="px-4 py-2 bg-primary text-primary-foreground rounded-lg"
 >
   Enroll Now
 </button>

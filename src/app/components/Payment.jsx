@@ -5,12 +5,15 @@ export default function Payment() {
 
   const title = params.get("title");
   const price = params.get("price");
+  const category = params.get("category");
 
   const loadRazorpay = async () => {
     const res = await fetch("http://localhost:5000/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: price.replace("₹", "") }),
+      body: JSON.stringify({
+        amount: Number(price.replace("₹", "")),
+      }),
     });
 
     const order = await res.json();
@@ -48,8 +51,9 @@ export default function Payment() {
 
         <h2 className="text-2xl font-bold">Course Payment</h2>
 
-        <div className="text-sm text-gray-700">
+        <div className="text-sm text-gray-700 space-y-1">
           <p><strong>Course:</strong> {title}</p>
+          <p><strong>Category:</strong> {category}</p>
           <p><strong>Price:</strong> {price}</p>
         </div>
 

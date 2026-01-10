@@ -1,49 +1,103 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "../../supabaseclient";
 
 export default function Payment() {
-  const params = new URLSearchParams(window.location.search);
+  const [user, setUser] = useState(null);
 
+  const params = new URLSearchParams(window.location.search);
   const title = params.get("title");
   const price = params.get("price");
   const category = params.get("category");
 
-  const loadRazorpay = async () => {
-    const res = await fetch("http://localhost:5000/create-order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        amount: Number(price.replace("₹", "")),
-      }),
+  // ✅ get logged-in user
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user);
     });
+  }, []);
 
-    const order = await res.json();
-
-    const options = {
-      key: "RAZORPAY_KEY_ID", // test key
-      amount: order.amount,
-      currency: "INR",
-      name: "Digital Skill Sathi",
-      description: title,
-      order_id: order.id,
-      handler: function (response) {
-        alert("Payment successful!");
-        console.log(response);
-      },
-      theme: {
-        color: "#0F2C54",
-      },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  };
-
+  // ✅ load Razorpay script once
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     document.body.appendChild(script);
   }, []);
+
+  const loadRazorpay = async () => {
+    if (!user) {
+      alert("Please login to continue");
+      return;
+    }
+
+    try {
+      // 🔐 create order (authorized)
+      const res = await fetch(
+        "http://localhost:5000/api/payment/create-order",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: Number(price.replace("₹", "")),
+            userId: user.id,
+            courseTitle: title,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        alert(err.error || "Failed to create order");
+        return;
+      }
+
+      const order = await res.json();
+
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: "INR",
+        name: "Digital Skill Sathi",
+        description: title,
+        order_id: order.id,
+
+        handler: async function (response) {
+          // 🔐 verify payment
+          const verifyRes = await fetch(
+            "http://localhost:5000/api/payment/verify-payment",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                userId: user.id,
+                courseTitle: title,
+                category,
+                amount: Number(price.replace("₹", "")),
+              }),
+            }
+          );
+
+          if (verifyRes.ok) {
+            alert("Payment successful 🎉 Course unlocked!");
+          } else {
+            alert("Payment verification failed");
+          }
+        },
+
+        theme: { color: "#0F2C54" },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6">

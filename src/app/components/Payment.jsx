@@ -1,27 +1,20 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../supabaseclient";
+import { supabase } from "../supabaseclient";
 
 export default function Payment() {
-  const [user, setUser] = useState(null);
-
   const params = new URLSearchParams(window.location.search);
+
   const title = params.get("title");
   const price = params.get("price");
   const category = params.get("category");
 
-  // ✅ get logged-in user
+  const [user, setUser] = useState(null);
+
+  // 🔐 get logged-in user
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user);
     });
-  }, []);
-
-  // ✅ load Razorpay script once
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    document.body.appendChild(script);
   }, []);
 
   const loadRazorpay = async () => {
@@ -31,9 +24,9 @@ export default function Payment() {
     }
 
     try {
-      // 🔐 create order (authorized)
+      // 1️⃣ create Razorpay order
       const res = await fetch(
-        "http://localhost:5000/api/payment/create-order",
+        "https://ai-server-5xxg.onrender.com/api/payment/create-order",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -46,13 +39,13 @@ export default function Payment() {
       );
 
       if (!res.ok) {
-        const err = await res.json();
-        alert(err.error || "Failed to create order");
+        alert("Failed to create order");
         return;
       }
 
       const order = await res.json();
 
+      // 2️⃣ open Razorpay
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: order.amount,
@@ -61,10 +54,10 @@ export default function Payment() {
         description: title,
         order_id: order.id,
 
+        // ✅ THIS IS WHERE YOUR CODE GOES
         handler: async function (response) {
-          // 🔐 verify payment
           const verifyRes = await fetch(
-            "http://localhost:5000/api/payment/verify-payment",
+            "https://ai-server-5xxg.onrender.com/api/payment/verify-payment",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -82,12 +75,16 @@ export default function Payment() {
 
           if (verifyRes.ok) {
             alert("Payment successful 🎉 Course unlocked!");
+            // optional redirect
+            // window.location.href = "/my-courses";
           } else {
             alert("Payment verification failed");
           }
         },
 
-        theme: { color: "#0F2C54" },
+        theme: {
+          color: "#0F2C54",
+        },
       };
 
       const rzp = new window.Razorpay(options);
@@ -99,10 +96,17 @@ export default function Payment() {
     }
   };
 
+  // load Razorpay script
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6">
       <div className="bg-white p-8 rounded-xl shadow-md max-w-md w-full space-y-4">
-
         <h2 className="text-2xl font-bold">Course Payment</h2>
 
         <div className="text-sm text-gray-700 space-y-1">

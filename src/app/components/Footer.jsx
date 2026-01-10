@@ -75,11 +75,9 @@ export function Footer() {
                     How it works
                   </button>
                 </li>
-
-                {/* ⭐ EMAIL HERE */}
                 <li className="pt-3 text-gray-700 text-sm">
-                  <strong>Email:</strong><br />
-                  support@digitalskillsathi.com
+                  <strong>Phone:</strong><br />
+                  +91 98765 43210
                 </li>
 
               </ul>
@@ -92,11 +90,9 @@ export function Footer() {
               <ul className="space-y-2 text-sm">
                 <li><a className="hover:underline">Blog</a></li>
                 <li><a className="hover:underline">FAQ</a></li>
-
-                {/* ⭐ PHONE HERE */}
                 <li className="pt-3 text-gray-700 text-sm">
-                  <strong>Phone:</strong><br />
-                  +91 98765 43210
+                  <strong>Email:</strong><br />
+                  support@digitalskillsathi.com
                 </li>
 
               </ul>

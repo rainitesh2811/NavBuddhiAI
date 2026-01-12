@@ -7,10 +7,10 @@ export default function Payment() {
   const title = params.get("title");
   const price = params.get("price");
   const category = params.get("category");
+  const type = params.get("type");
 
   const [user, setUser] = useState(null);
 
-  // 🔐 get logged-in user
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user);
@@ -24,7 +24,6 @@ export default function Payment() {
     }
 
     try {
-      // 1️⃣ create Razorpay order
       const res = await fetch(
         "https://ai-server-5xxg.onrender.com/api/payment/create-order",
         {
@@ -34,6 +33,7 @@ export default function Payment() {
             amount: Number(price.replace("₹", "")),
             userId: user.id,
             courseTitle: title,
+            type,
           }),
         }
       );
@@ -45,7 +45,6 @@ export default function Payment() {
 
       const order = await res.json();
 
-      // 2️⃣ open Razorpay
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: order.amount,
@@ -53,8 +52,6 @@ export default function Payment() {
         name: "Digital Skill Sathi",
         description: title,
         order_id: order.id,
-
-        // ✅ THIS IS WHERE YOUR CODE GOES
         handler: async function (response) {
           const verifyRes = await fetch(
             "https://ai-server-5xxg.onrender.com/api/payment/verify-payment",
@@ -69,22 +66,19 @@ export default function Payment() {
                 courseTitle: title,
                 category,
                 amount: Number(price.replace("₹", "")),
+                type,
               }),
             }
           );
 
           if (verifyRes.ok) {
             alert("Payment successful 🎉 Course unlocked!");
-            // optional redirect
-            // window.location.href = "/my-courses";
+            window.location.href = "/my-courses";
           } else {
             alert("Payment verification failed");
           }
         },
-
-        theme: {
-          color: "#0F2C54",
-        },
+        theme: { color: "#0F2C54" },
       };
 
       const rzp = new window.Razorpay(options);
@@ -96,7 +90,6 @@ export default function Payment() {
     }
   };
 
-  // load Razorpay script
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";

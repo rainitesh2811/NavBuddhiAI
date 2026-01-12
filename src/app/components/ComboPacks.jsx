@@ -8,6 +8,7 @@ const comboPacks = [
     discountedPrice: "₹399",
     discount: "33.39% OFF",
     courses: 2,
+    category: "Artificial Intelligence",
     features: [
       "Basics of Artificial Intelligence",
       "Advance Artificial Intelligence",
@@ -19,10 +20,11 @@ const comboPacks = [
   {
     id: 2,
     name: "Digital Marketing Pro Pack",
-    originalPrice: "$249",
-    discountedPrice: "$149",
+    originalPrice: "₹249",
+    discountedPrice: "₹149",
     discount: "40% OFF",
     courses: 5,
+    category: "Digital Marketing",
     features: [
       "SEO Mastery",
       "Social Media Marketing",
@@ -32,13 +34,27 @@ const comboPacks = [
       "Marketing Strategy",
     ],
     popular: true,
-  }
+  },
 ];
 
 export function ComboPacks() {
+
+  const handlePayment = (pack) => {
+    const query = new URLSearchParams({
+      title: pack.name,
+      price: pack.discountedPrice,
+      category: pack.category,
+      type: "combo", // 🔥 important
+    }).toString();
+
+    window.location.href = `/payment?${query}`;
+  };
+
   return (
     <section id="combo" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
+
+        {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent rounded-full mb-4">
             <Tag className="w-4 h-4 text-accent-foreground" />
@@ -47,7 +63,7 @@ export function ComboPacks() {
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl mb-4">
             Combo Pack Courses
           </h2>
 
@@ -56,33 +72,32 @@ export function ComboPacks() {
           </p>
         </div>
 
+        {/* Cards */}
         <div className="grid md:grid-cols-3 gap-8">
           {comboPacks.map((pack) => (
             <div
               key={pack.id}
-              className={`relative bg-card rounded-2xl border-2 p-8 hover:shadow-2xl transition-all ${
+              className={`relative bg-card rounded-2xl border-2 p-8 transition-all hover:shadow-2xl ${
                 pack.popular
                   ? "border-primary shadow-xl scale-105"
                   : "border-border hover:border-primary/50"
               }`}
             >
               {pack.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-6 py-1 rounded-full">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-1 rounded-full">
                   Most Popular
                 </div>
               )}
 
               <div className="text-center mb-6">
-                <h3 className="text-2xl text-card-foreground mb-2">
-                  {pack.name}
-                </h3>
+                <h3 className="text-2xl mb-2">{pack.name}</h3>
 
-                <div className="inline-block bg-accent px-3 py-1 rounded-full text-sm text-accent-foreground mb-4">
+                <div className="inline-block bg-accent px-3 py-1 rounded-full text-sm mb-4">
                   {pack.courses} Courses Included
                 </div>
 
                 <div className="mb-2">
-                  <span className="text-muted-foreground line-through mr-2">
+                  <span className="line-through mr-2 text-muted-foreground">
                     {pack.originalPrice}
                   </span>
                   <span className="text-4xl text-primary">
@@ -90,7 +105,7 @@ export function ComboPacks() {
                   </span>
                 </div>
 
-                <div className="inline-block bg-accent px-3 py-1 rounded-full text-sm text-accent-foreground">
+                <div className="inline-block bg-accent px-3 py-1 rounded-full text-sm">
                   Save {pack.discount}
                 </div>
               </div>
@@ -98,19 +113,21 @@ export function ComboPacks() {
               <div className="space-y-3 mb-8">
                 {pack.features.map((feature, index) => (
                   <div key={index} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                    <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
                       <Check className="w-3 h-3 text-primary" />
                     </div>
-                    <span className="text-card-foreground">{feature}</span>
+                    <span>{feature}</span>
                   </div>
                 ))}
               </div>
 
+              {/* 🔥 Payment Button */}
               <button
+                onClick={() => handlePayment(pack)}
                 className={`w-full py-3 rounded-lg transition-colors ${
                   pack.popular
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                    : "border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                    ? "bg-primary text-white hover:bg-primary/90"
+                    : "border-2 border-primary text-primary hover:bg-primary hover:text-white"
                 }`}
               >
                 Get Started Now

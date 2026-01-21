@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Navbar } from "./components/Navbar";
-import { Hero } from "./components/Hero";
-import { BrowseCourses } from "./components/BrowseCourses";
-import { ComboPacks } from "./components/ComboPacks";
-import { WhyChooseUs } from "./components/WhyChooseUs";
-import { Footer } from "./components/Footer";
-import { LoginModal } from "./components/LoginModal";
-import { SignupModal } from "./components/SignupModal";
-import LearningJourney from "./components/LearningJourney";
+import { useEffect, useState } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { supabase } from "../supabaseclient";
-import Payment from "./components/Payment";
-
+import Home from "./pages/Home";
+import Payment from "./pages/Payment";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import RefundPolicy from "./pages/RefundPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import "../styles/index.css";
 
 export default function App() {
-
   const [user, setUser] = useState(null);
-
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
@@ -48,40 +41,27 @@ export default function App() {
     setIsSignupOpen(false);
   };
 
-  if (window.location.pathname === "/payment") {
-  return <Payment />;
-}
-
-
   return (
-    <div className="min-h-screen">
-
-      <Navbar onLoginClick={handleOpenLogin} onSignupClick={handleOpenSignup} />
-
-      <Hero />
-      <BrowseCourses />
-      <LearningJourney />
-      <ComboPacks />
-
-      {/* ⭐ Start button now syncs to real auth */}
-      <WhyChooseUs
-        onSignupClick={handleOpenSignup}
-        isLoggedIn={!!user}
-      />
-
-      <Footer />
-
-      <LoginModal
-        isOpen={isLoginOpen}
-        onClose={handleCloseModals}
-        onSwitchToSignup={handleOpenSignup}
-      />
-
-      <SignupModal
-        isOpen={isSignupOpen}
-        onClose={handleCloseModals}
-        onSwitchToLogin={handleOpenLogin}
-      />
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              onLoginClick={handleOpenLogin}
+              onSignupClick={handleOpenSignup}
+              onCloseModals={handleCloseModals}
+              isLoginOpen={isLoginOpen}
+              isSignupOpen={isSignupOpen}
+              user={user}
+            />
+          }
+        />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
+      </Routes>
+    </Router>
   );
 }

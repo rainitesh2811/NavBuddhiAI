@@ -1,4 +1,5 @@
 import { Check, Tag } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const comboPacks = [
   {
@@ -38,6 +39,7 @@ const comboPacks = [
 ];
 
 export function ComboPacks() {
+  const navigate = useNavigate();
 
   const handlePayment = (pack) => {
     const query = new URLSearchParams({
@@ -47,7 +49,7 @@ export function ComboPacks() {
       type: "combo", // 🔥 important
     }).toString();
 
-    window.location.href = `/payment?${query}`;
+    navigate(`/payment?${query}`);
   };
 
   return (

@@ -1,4 +1,5 @@
-import { BookOpen, Clock, Users, Star } from "lucide-react";
+import { Clock, Star, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { ImageWithFallback } from "../components/figma/Imagewithfallback";
 
 const courses = [
@@ -29,6 +30,7 @@ const courses = [
 ];
 
 export function BrowseCourses() {
+  const navigate = useNavigate();
   return (
     <section
       id="browse-courses"   // ✅ IMPORTANT — this matches Explore button
@@ -91,8 +93,9 @@ export function BrowseCourses() {
                   <span className="text-2xl text-primary">{course.price}</span>
 <button
   onClick={() =>
-    window.location.href =
+    navigate(
       `/payment?title=${encodeURIComponent(course.title)}&price=${course.price}&category=${course.category}`
+    )
   }
   className="px-4 py-2 bg-primary text-primary-foreground rounded-lg"
 >

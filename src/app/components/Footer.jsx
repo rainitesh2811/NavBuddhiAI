@@ -4,6 +4,7 @@ import {
   Linkedin,
   Youtube
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function Footer() {
 
@@ -21,11 +22,8 @@ export function Footer() {
     <footer className="bg-white text-gray-800 border-t font-space">
 
       <div className="max-w-6xl mx-auto px-6 py-12 space-y-10">
-
-        {/* ---------------- TOP GRID ---------------- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-          {/* Left logo + subscribe */}
           <div className="max-w-md">
             <img src="/logo.png" alt="Logo" className="h-14 w-auto mb-3" />
 
@@ -48,11 +46,7 @@ export function Footer() {
               By subscribing you agree to our Privacy Policy and consent to receive updates.
             </p>
           </div>
-
-          {/* Right columns */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-
-            {/* ---------- LEARNING ---------- */}
             <div>
               <h3 className="font-semibold mb-3">Learning</h3>
 
@@ -82,8 +76,6 @@ export function Footer() {
 
               </ul>
             </div>
-
-            {/* ---------- RESOURCES ---------- */}
             <div>
               <h3 className="font-semibold mb-3">Resources</h3>
 
@@ -98,7 +90,6 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* ---------- FOLLOW US ---------- */}
             <div>
               <h3 className="font-semibold mb-3">Follow us</h3>
 
@@ -107,8 +98,6 @@ export function Footer() {
                 <li className="flex items-center gap-2"><Instagram className="w-4 h-4" /> Instagram</li>
                 <li className="flex items-center gap-2"><Linkedin className="w-4 h-4" /> LinkedIn</li>
                 <li className="flex items-center gap-2"><Youtube className="w-4 h-4" /> YouTube</li>
-
-                {/* ⭐ ADDRESS HERE */}
                 <li className="pt-3 text-gray-700 text-sm">
                   <strong>Address:</strong><br />
                   Lucknow, Uttar Pradesh, India
@@ -121,17 +110,14 @@ export function Footer() {
         </div>
 
         <hr />
-
-        {/* ---------------- SMALL LEGAL BAR ---------------- */}
         <div className="flex flex-col md:flex-row justify-between items-center 
                         text-xs text-gray-600 gap-2">
-
           <p>© 2026 Digital Skill Sathi. All rights reserved.</p>
 
           <div className="flex gap-4">
-            <a className="hover:underline">Privacy Policy</a>
-            <a className="hover:underline">Terms of Service</a>
-            <a className="hover:underline">Cookies Settings</a>
+            <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="hover:underline">Terms of Service</Link>
+            <Link to="/refund-policy" className="hover:underline">Refund Policy</Link>
           </div>
 
         </div>
